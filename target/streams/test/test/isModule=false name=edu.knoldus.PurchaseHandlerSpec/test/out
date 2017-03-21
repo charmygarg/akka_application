@@ -1,0 +1,15 @@
+[0m[[0minfo[0m] [0m[32mPurchaseHandlerSpec:[0m[0m
+[0m[[0minfo[0m] [0m[32mPurchase Request Handler [0m[0m
+[0m[[0minfo[0m] [0m[31m- must forward Customer details to Validation Actor *** FAILED ***[0m[0m
+[0m[[0minfo[0m] [0m[31m  akka.pattern.AskTimeoutException: Ask timed out on [Actor[akka://test-system/user/$a#926510796]] after [100000 ms]. Sender[null] sent message of type "edu.knoldus.PurchaseRequestHandler$Customer".[0m[0m
+[0m[[0minfo[0m] [0m[31m  at akka.pattern.PromiseActorRef$$anonfun$1.apply$mcV$sp(AskSupport.scala:604)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at akka.actor.Scheduler$$anon$4.run(Scheduler.scala:126)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at scala.concurrent.Future$InternalCallbackExecutor$.unbatchedExecute(Future.scala:601)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at scala.concurrent.BatchingExecutor$class.execute(BatchingExecutor.scala:109)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at scala.concurrent.Future$InternalCallbackExecutor$.execute(Future.scala:599)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at akka.actor.LightArrayRevolverScheduler$TaskHolder.executeTask(LightArrayRevolverScheduler.scala:329)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at akka.actor.LightArrayRevolverScheduler$$anon$4.executeBucket$1(LightArrayRevolverScheduler.scala:280)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at akka.actor.LightArrayRevolverScheduler$$anon$4.nextTick(LightArrayRevolverScheduler.scala:284)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at akka.actor.LightArrayRevolverScheduler$$anon$4.run(LightArrayRevolverScheduler.scala:236)[0m[0m
+[0m[[0minfo[0m] [0m[31m  at java.lang.Thread.run(Thread.java:745)[0m[0m
+[0m[[0minfo[0m] [0m[31m  ...[0m[0m
