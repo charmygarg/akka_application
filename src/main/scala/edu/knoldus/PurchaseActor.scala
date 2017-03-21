@@ -1,8 +1,6 @@
 package edu.knoldus
 
-import akka.actor.{Props, ActorSystem, Actor}
-import akka.routing.FromConfig
-import com.typesafe.config.ConfigFactory
+import akka.actor.Actor
 
 class PurchaseActor extends Actor with akka.actor.ActorLogging {
 
@@ -15,20 +13,3 @@ class PurchaseActor extends Actor with akka.actor.ActorLogging {
 
 }
 
-object PurchaseActor {
-
-  val config = ConfigFactory.parseString(
-    """
-      |akka.actor.deployment {
-      | /poolRouter {
-      |   router = balancing-pool
-      |   nr-of-instances = 5
-      | }
-      |}
-    """.stripMargin
-  )
-
-  val system = ActorSystem("RouterSystem", config)
-  val router = system.actorOf(FromConfig.props(Props[PurchaseActor]), "poolRouter")
-
-}
