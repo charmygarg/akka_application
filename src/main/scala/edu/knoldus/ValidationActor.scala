@@ -1,9 +1,9 @@
 package edu.knoldus
 
-import akka.actor.Actor
+import akka.actor.{ActorRef, Actor}
 import edu.knoldus.PurchaseRequestHandler.Customer
 
-class ValidationActor extends Actor with akka.actor.ActorLogging {
+class ValidationActor(ref: ActorRef) extends Actor with akka.actor.ActorLogging {
 
   var quantityOfItem = 5
 
@@ -16,10 +16,10 @@ class ValidationActor extends Actor with akka.actor.ActorLogging {
   private def checkItem = {
     if(quantityOfItem > 0) {
       quantityOfItem -= 1
-      PurchaseRequestHandler.purchaseActor.forward(0)
+      ref.forward(0)
     } else {
       log.error("Out of stock")
-      PurchaseRequestHandler.purchaseActor.forward(-1)
+      ref.forward(-1)
     }
   }
 
