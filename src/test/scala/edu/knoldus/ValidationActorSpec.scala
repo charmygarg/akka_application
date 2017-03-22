@@ -1,30 +1,41 @@
-package edu.knoldus
+import akka.actor.{ActorSystem, Props}
+import akka.testkit.{CallingThreadDispatcher, EventFilter, TestKit}
+import com.typesafe.config.ConfigFactory
+import edu.knoldus.PurchaseRequestHandler
+import org.scalatest.{BeforeAndAfterAll, MustMatchers, WordSpecLike}
 
-import akka.actor.{Props, ActorSystem}
-import akka.testkit.{TestActors, ImplicitSender, DefaultTimeout, TestKit}
-import edu.knoldus.PurchaseRequestHandler.Customer
-import org.scalatest.{Matchers, MustMatchers, BeforeAndAfterAll, WordSpecLike}
-import scala.concurrent.duration._
+object ValidationActorSpec {
+  val testSystem = {
+    val config = ConfigFactory.parseString(
+      """
+        |akka.loggers = [akka.testkit.TestEventListener]
+      """.stripMargin
+    )
+    ActorSystem("test-system", config)
+  }
+}
 
-class ValidationActorSpec extends TestKit(ActorSystem("ValidationActorSpec"))
-  with DefaultTimeout with ImplicitSender
-  with WordSpecLike with Matchers with BeforeAndAfterAll {
+import ValidationActorSpec._
 
-  override protected def afterAll(): Unit = {
+class ValidationActorSpec extends TestKit(testSystem) with WordSpecLike
+  with BeforeAndAfterAll with MustMatchers {
+
+  override protected def afterAll() = {
     system.terminate()
   }
 
-  val echoRef = system.actorOf(TestActors.echoActorProps)
-  val ref = system.actorOf(Props(classOf[ValidationActor], testActor))
+  "ValidationActor" must {
+    "log Validation request handler when receives a request" in {
+      val dispatcherId = CallingThreadDispatcher.Id
+      val props = Props(classOf[PurchaseRequestHandler], testActor).withDispatcher(dispatcherId)
 
-  "validation Actor " must {
-    "validate quantity of items and forward for 0 " in {
-      within(500 millis) {
-        echoRef ! Customer
-        expectMsg(Customer)
-      }
+      val ref = system.actorOf(props)
+
+      EventFilter.info(message = "Checking for existence of item in ValidationActor", occurrences = 1)
+//        .intercept{
+//          ref ! Customer
+//        }
     }
   }
-
 
 }

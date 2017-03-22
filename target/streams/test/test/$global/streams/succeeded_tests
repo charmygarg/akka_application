@@ -1,5 +1,7 @@
 #Successful Tests
-#Wed Mar 22 12:24:41 IST 2017
-edu.knoldus.PurchaseHandlerSpec=1490165681208
-edu.knoldus.PurchaseActorSpec=1490165681171
-edu.knoldus.ValidationActorSpec=1490165681211
+#Wed Mar 22 14:59:50 IST 2017
+edu.knoldus.PurchaseHandlerSpec=1490173609494
+edu.knoldus.PurchaseActorSpec=1490174990738
+PurchaseHandlerSpec=1490174990761
+edu.knoldus.ValidationActorSpec=1490174507854
+ValidationActorSpec=1490174990745

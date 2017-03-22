@@ -1,29 +1,41 @@
-package edu.knoldus
-
 import akka.actor.{ActorSystem, Props}
-import akka.testkit.{DefaultTimeout, ImplicitSender, TestActors, TestKit}
+import akka.testkit.{CallingThreadDispatcher, EventFilter, TestKit}
+import com.typesafe.config.ConfigFactory
+import edu.knoldus.PurchaseRequestHandler
 import edu.knoldus.PurchaseRequestHandler.Customer
-import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
+import org.scalatest.{BeforeAndAfterAll, MustMatchers, WordSpecLike}
 
-import scala.concurrent.duration._
+object PurchaseHandlerSpec {
+  val testSystem = {
+    val config = ConfigFactory.parseString(
+      """
+        |akka.loggers = [akka.testkit.TestEventListener]
+      """.stripMargin
+    )
+    ActorSystem("test-system", config)
+  }
+}
 
-class PurchaseHandlerSpec extends TestKit(ActorSystem("PurchaseHandlerSpec"))
-  with DefaultTimeout with ImplicitSender
-  with WordSpecLike with Matchers with BeforeAndAfterAll {
+import PurchaseHandlerSpec._
 
-  override protected def afterAll(): Unit = {
+class PurchaseHandlerSpec extends TestKit(testSystem) with WordSpecLike
+  with BeforeAndAfterAll with MustMatchers {
+
+  override protected def afterAll() = {
     system.terminate()
   }
 
-  val echoRef = system.actorOf(TestActors.echoActorProps)
-  val ref = system.actorOf(Props(classOf[PurchaseRequestHandler], testActor))
+  "PurchaseHandler" must {
+    "log Purchase request handler when receives a request" in {
+      val dispatcherId = CallingThreadDispatcher.Id
+      val props = Props(classOf[PurchaseRequestHandler], testActor).withDispatcher(dispatcherId)
 
-  "Purchase Request Handler " must {
-    "forward Customer details to Validation Actor" in {
-      within(500 millis) {
-        echoRef ! Customer
-        expectMsg(Customer)
-      }
+      val ref = system.actorOf(props)
+
+      EventFilter.info(message = "Validating item availability in PurchaseRequestHandler", occurrences = 1)
+        .intercept{
+          ref ! Customer("Charmy", "Noida", 6781932L, 9876543210L)
+        }
     }
   }
 
