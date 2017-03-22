@@ -36,7 +36,8 @@ object PurchaseRequestHandler extends App {
   val system = ActorSystem("RouterSystem", config)
 
   val purchaseActorRef = system.actorOf(FromConfig.props(Props[PurchaseActor]), "poolRouter")
-  val validationActorRef = system.actorOf(Props(classOf[ValidationActor], purchaseActorRef))
+  def props = Props(classOf[ValidationActor], purchaseActorRef)
+  val validationActorRef = system.actorOf(props)
   val requestHandlerRef = system.actorOf(Props(classOf[PurchaseRequestHandler], validationActorRef))
 
   implicit val timeout = Timeout(1000 seconds)

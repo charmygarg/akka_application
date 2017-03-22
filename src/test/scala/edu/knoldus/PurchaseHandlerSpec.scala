@@ -1,30 +1,29 @@
 package edu.knoldus
 
-import akka.actor.{Props, ActorSystem}
-import akka.testkit.TestKit
-import akka.util.Timeout
+import akka.actor.{ActorSystem, Props}
+import akka.testkit.{DefaultTimeout, ImplicitSender, TestActors, TestKit}
 import edu.knoldus.PurchaseRequestHandler.Customer
-import org.scalatest.{MustMatchers, BeforeAndAfterAll, WordSpecLike}
-import scala.concurrent.Await
-import scala.concurrent.duration._
-import akka.pattern.ask
+import org.scalatest.{BeforeAndAfterAll, Matchers, WordSpecLike}
 
-/**
-  * Created by knodus on 21/3/17.
-  */
-class PurchaseHandlerSpec extends TestKit(ActorSystem("test-system")) with WordSpecLike
-  with BeforeAndAfterAll with MustMatchers {
+import scala.concurrent.duration._
+
+class PurchaseHandlerSpec extends TestKit(ActorSystem("PurchaseHandlerSpec"))
+  with DefaultTimeout with ImplicitSender
+  with WordSpecLike with Matchers with BeforeAndAfterAll {
 
   override protected def afterAll(): Unit = {
     system.terminate()
   }
 
+  val echoRef = system.actorOf(TestActors.echoActorProps)
+  val ref = system.actorOf(Props(classOf[PurchaseRequestHandler], testActor))
+
   "Purchase Request Handler " must {
     "forward Customer details to Validation Actor" in {
-      val ref = system.actorOf(Props(classOf[PurchaseRequestHandler], testActor))
-      implicit val timeout = Timeout(15 seconds)
-      val future = ref.ask(Customer("Charmy", "Mzn", 3425162745L, 7685948576L))
-      Await.result(future, Duration.Inf) must be(Customer)
+      within(500 millis) {
+        echoRef ! Customer
+        expectMsg(Customer)
+      }
     }
   }
 

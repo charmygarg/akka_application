@@ -8,9 +8,6 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 import akka.pattern.ask
 
-/**
-  * Created by knodus on 21/3/17.
-  */
 class PurchaseActorSpec extends TestKit(ActorSystem("test-system")) with WordSpecLike
   with BeforeAndAfterAll with MustMatchers {
 

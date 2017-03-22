@@ -4,7 +4,7 @@
 		module="akkapurchaseapplication$sources_2.11"
 		revision="1.0"
 		status="integration"
-		publication="20170321223758"
+		publication="20170322095855"
 	/>
 	<configurations>
 		<conf name="compile" visibility="public" description=""/>
