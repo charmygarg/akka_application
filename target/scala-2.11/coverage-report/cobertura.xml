@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 <coverage 
-line-rate="0.84" lines-valid="32" lines-covered="27" branches-valid="2" branches-covered="1" branch-rate="0.50" complexity="0" version="1.0" timestamp="1490201424940">
+line-rate="0.84" lines-valid="32" lines-covered="27" branches-valid="2" branches-covered="1" branch-rate="0.50" complexity="0" version="1.0" timestamp="1490202963880">
     <sources>
         <source>--source</source>
         <source>/home/knodus/Downloads/AkkaPurchaseApplication/src/main/scala-2.11</source>

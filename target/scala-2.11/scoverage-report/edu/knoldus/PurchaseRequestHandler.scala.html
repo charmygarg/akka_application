@@ -24,12 +24,12 @@
           <div class="tab-pane active" id="codegrid">
             <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.knoldus
 </span>2 <span style=''>
-</span>3 <span style=''>import akka.actor.{ActorRef, Props, ActorSystem, Actor}
-</span>4 <span style=''>import akka.routing.FromConfig
-</span>5 <span style=''>import akka.util.Timeout
-</span>6 <span style=''>import com.typesafe.config.ConfigFactory
-</span>7 <span style=''>
-</span>8 <span style=''>import akka.pattern.ask
+</span>3 <span style=''>import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+</span>4 <span style=''>import akka.pattern.ask
+</span>5 <span style=''>import akka.routing.FromConfig
+</span>6 <span style=''>import akka.util.Timeout
+</span>7 <span style=''>import com.typesafe.config.ConfigFactory
+</span>8 <span style=''>
 </span>9 <span style=''>import scala.concurrent.duration._
 </span>10 <span style=''>
 </span>11 <span style=''>class PurchaseRequestHandler(validationRef: ActorRef) extends Actor with akka.actor.ActorLogging {
@@ -41,10 +41,10 @@
 </span>17 <span style=''>  }
 </span>18 <span style=''>
 </span>19 <span style=''>}
-</span>20 <span style=''>case class Customer(name: String, address: String, creditNo: Long, mobileNo: Long)
-</span>21 <span style=''>//object PurchaseRequestHandler extends App {
-</span>22 <span style=''>//
-</span>23 <span style=''>//
+</span>20 <span style=''>
+</span>21 <span style=''>case class Customer(name: String, address: String, creditNo: Long, mobileNo: Long)
+</span>22 <span style=''>
+</span>23 <span style=''>//object PurchaseRequestHandler extends App {
 </span>24 <span style=''>//
 </span>25 <span style=''>//  val config = ConfigFactory.parseString(
 </span>26 <span style=''>//    &quot;&quot;&quot;
@@ -64,24 +64,25 @@
 </span>40 <span style=''>//  val requestHandlerRef = system.actorOf(Props(classOf[PurchaseRequestHandler], validationActorRef))
 </span>41 <span style=''>//
 </span>42 <span style=''>//  implicit val timeout = Timeout(1000 seconds)
-</span>43 <span style=''>//  import scala.concurrent.ExecutionContext.Implicits.global
-</span>44 <span style=''>//
-</span>45 <span style=''>//  val result0 = requestHandlerRef ? Customer(&quot;Charmy&quot;, &quot;Mzn&quot;, 3425162745L, 7685948576L)
-</span>46 <span style=''>//  val result1 = requestHandlerRef ? Customer(&quot;Simar&quot;, &quot;Delhi&quot;, 3425162745L, 7685948576L)
-</span>47 <span style=''>//  val result2 = requestHandlerRef ? Customer(&quot;Ashish&quot;, &quot;Badhot&quot;, 3425162745L, 7685948576L)
-</span>48 <span style=''>//  val result3 = requestHandlerRef ? Customer(&quot;Shubra&quot;, &quot;Dehradun&quot;, 3425162745L, 7685948576L)
-</span>49 <span style=''>//  val result4 = requestHandlerRef ? Customer(&quot;Himanshu&quot;, &quot;Pahadi&quot;, 3425162745L, 7685948576L)
-</span>50 <span style=''>//  val result5 = requestHandlerRef ? Customer(&quot;Vandana&quot;, &quot;Noida&quot;, 3425162745L, 7685948576L)
-</span>51 <span style=''>//  val result6 = requestHandlerRef ? Customer(&quot;Vandana&quot;, &quot;Noida&quot;, 3425162745L, 7685948576L)
-</span>52 <span style=''>//  result0 foreach println
-</span>53 <span style=''>//  result1 foreach println
-</span>54 <span style=''>//  result2 foreach println
-</span>55 <span style=''>//  result3 foreach println
-</span>56 <span style=''>//  result4 foreach println
-</span>57 <span style=''>//  result5 foreach println
-</span>58 <span style=''>//  result6 foreach println
-</span>59 <span style=''>//
-</span>60 <span style=''>//}
+</span>43 <span style=''>//
+</span>44 <span style=''>//  import scala.concurrent.ExecutionContext.Implicits.global
+</span>45 <span style=''>//
+</span>46 <span style=''>//  val result0 = requestHandlerRef ? Customer(&quot;Charmy&quot;, &quot;Mzn&quot;, 3425162745L, 7685948576L)
+</span>47 <span style=''>//  val result1 = requestHandlerRef ? Customer(&quot;Simar&quot;, &quot;Delhi&quot;, 3425162745L, 7685948576L)
+</span>48 <span style=''>//  val result2 = requestHandlerRef ? Customer(&quot;Ashish&quot;, &quot;Badhot&quot;, 3425162745L, 7685948576L)
+</span>49 <span style=''>//  val result3 = requestHandlerRef ? Customer(&quot;Shubra&quot;, &quot;Dehradun&quot;, 3425162745L, 7685948576L)
+</span>50 <span style=''>//  val result4 = requestHandlerRef ? Customer(&quot;Himanshu&quot;, &quot;Pahadi&quot;, 3425162745L, 7685948576L)
+</span>51 <span style=''>//  val result5 = requestHandlerRef ? Customer(&quot;Vandana&quot;, &quot;Noida&quot;, 3425162745L, 7685948576L)
+</span>52 <span style=''>//  val result6 = requestHandlerRef ? Customer(&quot;Vandana&quot;, &quot;Noida&quot;, 3425162745L, 7685948576L)
+</span>53 <span style=''>//  result0 foreach println
+</span>54 <span style=''>//  result1 foreach println
+</span>55 <span style=''>//  result2 foreach println
+</span>56 <span style=''>//  result3 foreach println
+</span>57 <span style=''>//  result4 foreach println
+</span>58 <span style=''>//  result5 foreach println
+</span>59 <span style=''>//  result6 foreach println
+</span>60 <span style=''>//
+</span>61 <span style=''>//}
 </span></pre>
           </div>
           <div class="tab-pane" id="statementlist">

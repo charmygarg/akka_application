@@ -24,7 +24,7 @@
           <div class="tab-pane active" id="codegrid">
             <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.knoldus
 </span>2 <span style=''>
-</span>3 <span style=''>import akka.actor.{ActorRef, Actor}
+</span>3 <span style=''>import akka.actor.{Actor, ActorRef}
 </span>4 <span style=''>
 </span>5 <span style=''>class ValidationActor(purchaseRef: ActorRef) extends Actor with akka.actor.ActorLogging {
 </span>6 <span style=''>
@@ -37,7 +37,7 @@
 </span>13 <span style=''>  }
 </span>14 <span style=''>
 </span>15 <span style=''>  def checkItem = {
-</span>16 <span style=''>    if(</span><span style='background: #AEF1AE'>quantityOfItem &gt; 0</span><span style=''>) </span><span style='background: #AEF1AE'>{
+</span>16 <span style=''>    if (</span><span style='background: #AEF1AE'>quantityOfItem &gt; 0</span><span style=''>) </span><span style='background: #AEF1AE'>{
 </span>17 <span style=''></span><span style='background: #AEF1AE'>      quantityOfItem -= 1
 </span>18 <span style=''></span><span style='background: #AEF1AE'>      purchaseRef.forward(0)
 </span>19 <span style=''></span><span style='background: #AEF1AE'>    }</span><span style=''> else </span><span style='background: #F0ADAD'>{
@@ -213,9 +213,9 @@
           27
         </td>
         <td>
-          369
+          370
           -
-          431
+          432
         </td>
         <td>
           Block
@@ -237,9 +237,9 @@
           21
         </td>
         <td>
-          349
+          350
           -
-          367
+          368
         </td>
         <td>
           Apply
@@ -258,9 +258,9 @@
           23
         </td>
         <td>
-          377
+          378
           -
-          396
+          397
         </td>
         <td>
           Apply
@@ -279,9 +279,9 @@
           22
         </td>
         <td>
-          377
+          378
           -
-          396
+          397
         </td>
         <td>
           Apply
@@ -300,9 +300,9 @@
           26
         </td>
         <td>
-          403
+          404
           -
-          425
+          426
         </td>
         <td>
           ApplyToImplicitArgs
@@ -321,9 +321,9 @@
           25
         </td>
         <td>
-          422
+          423
           -
-          422
+          423
         </td>
         <td>
           Select
@@ -342,9 +342,9 @@
           24
         </td>
         <td>
-          423
-          -
           424
+          -
+          425
         </td>
         <td>
           Literal
@@ -363,9 +363,9 @@
           32
         </td>
         <td>
-          437
+          438
           -
-          506
+          507
         </td>
         <td>
           Block
@@ -387,9 +387,9 @@
           28
         </td>
         <td>
-          445
+          446
           -
-          470
+          471
         </td>
         <td>
           Apply
@@ -408,9 +408,9 @@
           29
         </td>
         <td>
-          498
-          -
           499
+          -
+          500
         </td>
         <td>
           Literal
@@ -429,9 +429,9 @@
           31
         </td>
         <td>
-          477
+          478
           -
-          500
+          501
         </td>
         <td>
           ApplyToImplicitArgs
@@ -450,9 +450,9 @@
           30
         </td>
         <td>
-          496
+          497
           -
-          496
+          497
         </td>
         <td>
           Select

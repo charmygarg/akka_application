@@ -37,7 +37,7 @@ class PurchaseHandlerSpec extends TestKit(testSystem) with WordSpecLike
         }
     }
 
-    "forward to next actor" in {
+    "forward to Validation Actor" in {
 
       val dispatcherId = CallingThreadDispatcher.Id
       val props = Props(classOf[PurchaseRequestHandler], testActor).withDispatcher(dispatcherId)

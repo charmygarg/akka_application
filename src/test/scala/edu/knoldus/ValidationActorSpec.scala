@@ -6,6 +6,7 @@ import org.scalatest.{BeforeAndAfterAll, MustMatchers, WordSpecLike}
 
 object ValidationActorSpec {
   val testSystem = {
+
     val config = ConfigFactory.parseString(
       """
         |akka.loggers = [akka.testkit.TestEventListener]
@@ -35,6 +36,18 @@ class ValidationActorSpec extends TestKit(testSystem) with WordSpecLike
         .intercept {
           ref ! Customer("Charmy", "Mzn", 3425162745L, 7685948576L)
         }
+    }
+
+    "forward to PurchaseHandler Actor" in {
+
+      val dispatcherId = CallingThreadDispatcher.Id
+      val props = Props(classOf[ValidationActor], testActor).withDispatcher(dispatcherId)
+
+      val ref = system.actorOf(props)
+
+      ref ! Customer("Charmy", "Noida", 6781932L, 9876543210L)
+
+      expectMsg(0)
     }
   }
 
