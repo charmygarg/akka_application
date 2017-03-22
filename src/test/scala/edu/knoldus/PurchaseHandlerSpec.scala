@@ -1,8 +1,7 @@
 import akka.actor.{ActorSystem, Props}
 import akka.testkit.{CallingThreadDispatcher, EventFilter, TestKit}
 import com.typesafe.config.ConfigFactory
-import edu.knoldus.PurchaseRequestHandler
-import edu.knoldus.PurchaseRequestHandler.Customer
+import edu.knoldus.{Customer, PurchaseRequestHandler}
 import org.scalatest.{BeforeAndAfterAll, MustMatchers, WordSpecLike}
 
 object PurchaseHandlerSpec {
@@ -33,9 +32,23 @@ class PurchaseHandlerSpec extends TestKit(testSystem) with WordSpecLike
       val ref = system.actorOf(props)
 
       EventFilter.info(message = "Validating item availability in PurchaseRequestHandler", occurrences = 1)
-        .intercept{
+        .intercept {
           ref ! Customer("Charmy", "Noida", 6781932L, 9876543210L)
         }
+    }
+
+    "forward to next actor" in {
+
+      val dispatcherId = CallingThreadDispatcher.Id
+      val props = Props(classOf[PurchaseRequestHandler], testActor).withDispatcher(dispatcherId)
+
+      val ref = system.actorOf(props)
+
+      ref ! Customer("Charmy", "Noida", 6781932L, 9876543210L)
+
+      expectMsgPF() {
+        case Customer => Customer("Charmy", "Noida", 6781932L, 9876543210L)
+      }
     }
   }
 

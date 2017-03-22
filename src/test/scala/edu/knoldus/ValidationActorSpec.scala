@@ -1,7 +1,7 @@
 import akka.actor.{ActorSystem, Props}
-import akka.testkit.{CallingThreadDispatcher, EventFilter, TestKit}
+import akka.testkit._
 import com.typesafe.config.ConfigFactory
-import edu.knoldus.PurchaseRequestHandler
+import edu.knoldus.{Customer, ValidationActor}
 import org.scalatest.{BeforeAndAfterAll, MustMatchers, WordSpecLike}
 
 object ValidationActorSpec {
@@ -27,14 +27,14 @@ class ValidationActorSpec extends TestKit(testSystem) with WordSpecLike
   "ValidationActor" must {
     "log Validation request handler when receives a request" in {
       val dispatcherId = CallingThreadDispatcher.Id
-      val props = Props(classOf[PurchaseRequestHandler], testActor).withDispatcher(dispatcherId)
+      val props = Props(classOf[ValidationActor], testActor).withDispatcher(dispatcherId)
 
       val ref = system.actorOf(props)
 
       EventFilter.info(message = "Checking for existence of item in ValidationActor", occurrences = 1)
-//        .intercept{
-//          ref ! Customer
-//        }
+        .intercept {
+          ref ! Customer("Charmy", "Mzn", 3425162745L, 7685948576L)
+        }
     }
   }
 

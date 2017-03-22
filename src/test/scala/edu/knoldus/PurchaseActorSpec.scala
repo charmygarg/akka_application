@@ -1,12 +1,13 @@
 package edu.knoldus
 
-import akka.actor.{Props, ActorSystem}
-import akka.testkit.{TestActorRef, TestKit}
+import akka.actor.{ActorSystem, Props}
+import akka.pattern.ask
+import akka.testkit.TestKit
 import akka.util.Timeout
-import org.scalatest.{MustMatchers, BeforeAndAfterAll, WordSpecLike}
+import org.scalatest.{BeforeAndAfterAll, MustMatchers, WordSpecLike}
+
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import akka.pattern.ask
 
 class PurchaseActorSpec extends TestKit(ActorSystem("test-system")) with WordSpecLike
   with BeforeAndAfterAll with MustMatchers {

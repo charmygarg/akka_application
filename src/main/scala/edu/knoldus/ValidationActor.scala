@@ -1,20 +1,19 @@
 package edu.knoldus
 
-import akka.actor.{ActorRef, Actor}
-import edu.knoldus.PurchaseRequestHandler.Customer
+import akka.actor.{Actor, ActorRef}
 
 class ValidationActor(purchaseRef: ActorRef) extends Actor with akka.actor.ActorLogging {
 
   var quantityOfItem = 5
 
   override def receive = {
-    case Customer =>
+    case c: Customer =>
       log.info("Checking for existence of item in ValidationActor")
       self ! checkItem
   }
 
-  private def checkItem = {
-    if(quantityOfItem > 0) {
+  def checkItem = {
+    if (quantityOfItem > 0) {
       quantityOfItem -= 1
       purchaseRef.forward(0)
     } else {

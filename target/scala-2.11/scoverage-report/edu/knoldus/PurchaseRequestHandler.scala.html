@@ -1,0 +1,185 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          edu/knoldus/PurchaseRequestHandler.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.knoldus
+</span>2 <span style=''>
+</span>3 <span style=''>import akka.actor.{ActorRef, Props, ActorSystem, Actor}
+</span>4 <span style=''>import akka.routing.FromConfig
+</span>5 <span style=''>import akka.util.Timeout
+</span>6 <span style=''>import com.typesafe.config.ConfigFactory
+</span>7 <span style=''>
+</span>8 <span style=''>import akka.pattern.ask
+</span>9 <span style=''>import scala.concurrent.duration._
+</span>10 <span style=''>
+</span>11 <span style=''>class PurchaseRequestHandler(validationRef: ActorRef) extends Actor with akka.actor.ActorLogging {
+</span>12 <span style=''>
+</span>13 <span style=''>  override def receive = {
+</span>14 <span style=''>    case Customer(_, _, _, _) =&gt;
+</span>15 <span style=''>      </span><span style='background: #AEF1AE'>log.info(&quot;Validating item availability in PurchaseRequestHandler&quot;)</span><span style=''>
+</span>16 <span style=''>      </span><span style='background: #AEF1AE'>validationRef.forward(Customer)</span><span style=''>
+</span>17 <span style=''>  }
+</span>18 <span style=''>
+</span>19 <span style=''>}
+</span>20 <span style=''>case class Customer(name: String, address: String, creditNo: Long, mobileNo: Long)
+</span>21 <span style=''>//object PurchaseRequestHandler extends App {
+</span>22 <span style=''>//
+</span>23 <span style=''>//
+</span>24 <span style=''>//
+</span>25 <span style=''>//  val config = ConfigFactory.parseString(
+</span>26 <span style=''>//    &quot;&quot;&quot;
+</span>27 <span style=''>//      |akka.actor.deployment {
+</span>28 <span style=''>//      | /poolRouter {
+</span>29 <span style=''>//      |   router = balancing-pool
+</span>30 <span style=''>//      |   nr-of-instances = 5
+</span>31 <span style=''>//      | }
+</span>32 <span style=''>//      |}
+</span>33 <span style=''>//    &quot;&quot;&quot;.stripMargin
+</span>34 <span style=''>//  )
+</span>35 <span style=''>//
+</span>36 <span style=''>//  val system = ActorSystem(&quot;RouterSystem&quot;, config)
+</span>37 <span style=''>//
+</span>38 <span style=''>//  val purchaseActorRef = system.actorOf(FromConfig.props(Props[PurchaseActor]), &quot;poolRouter&quot;)
+</span>39 <span style=''>//  val validationActorRef = system.actorOf(Props(classOf[ValidationActor], purchaseActorRef))
+</span>40 <span style=''>//  val requestHandlerRef = system.actorOf(Props(classOf[PurchaseRequestHandler], validationActorRef))
+</span>41 <span style=''>//
+</span>42 <span style=''>//  implicit val timeout = Timeout(1000 seconds)
+</span>43 <span style=''>//  import scala.concurrent.ExecutionContext.Implicits.global
+</span>44 <span style=''>//
+</span>45 <span style=''>//  val result0 = requestHandlerRef ? Customer(&quot;Charmy&quot;, &quot;Mzn&quot;, 3425162745L, 7685948576L)
+</span>46 <span style=''>//  val result1 = requestHandlerRef ? Customer(&quot;Simar&quot;, &quot;Delhi&quot;, 3425162745L, 7685948576L)
+</span>47 <span style=''>//  val result2 = requestHandlerRef ? Customer(&quot;Ashish&quot;, &quot;Badhot&quot;, 3425162745L, 7685948576L)
+</span>48 <span style=''>//  val result3 = requestHandlerRef ? Customer(&quot;Shubra&quot;, &quot;Dehradun&quot;, 3425162745L, 7685948576L)
+</span>49 <span style=''>//  val result4 = requestHandlerRef ? Customer(&quot;Himanshu&quot;, &quot;Pahadi&quot;, 3425162745L, 7685948576L)
+</span>50 <span style=''>//  val result5 = requestHandlerRef ? Customer(&quot;Vandana&quot;, &quot;Noida&quot;, 3425162745L, 7685948576L)
+</span>51 <span style=''>//  val result6 = requestHandlerRef ? Customer(&quot;Vandana&quot;, &quot;Noida&quot;, 3425162745L, 7685948576L)
+</span>52 <span style=''>//  result0 foreach println
+</span>53 <span style=''>//  result1 foreach println
+</span>54 <span style=''>//  result2 foreach println
+</span>55 <span style=''>//  result3 foreach println
+</span>56 <span style=''>//  result4 foreach println
+</span>57 <span style=''>//  result5 foreach println
+</span>58 <span style=''>//  result6 foreach println
+</span>59 <span style=''>//
+</span>60 <span style=''>//}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          13
+        </td>
+        <td>
+          13
+        </td>
+        <td>
+          360
+          -
+          360
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.knoldus.PurchaseRequestHandler.$anonfun.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new $anonfun()
+        </td>
+      </tr><tr>
+        <td>
+          15
+        </td>
+        <td>
+          10
+        </td>
+        <td>
+          401
+          -
+          467
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.event.LoggingAdapter.info
+        </td>
+        <td style="background: #AEF1AE">
+          PurchaseRequestHandler.this.log.info(&quot;Validating item availability in PurchaseRequestHandler&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          11
+        </td>
+        <td>
+          495
+          -
+          495
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.Actor.context
+        </td>
+        <td style="background: #AEF1AE">
+          PurchaseRequestHandler.this.context
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          12
+        </td>
+        <td>
+          474
+          -
+          505
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.actor.ActorRef.forward
+        </td>
+        <td style="background: #AEF1AE">
+          PurchaseRequestHandler.this.validationRef.forward(Customer)(PurchaseRequestHandler.this.context)
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>

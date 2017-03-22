@@ -1,0 +1,471 @@
+<html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id="title">
+          edu/knoldus/ValidationActor.scala.html
+        </title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/css/theme.default.min.css" type="text/css"/><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.20.1/js/jquery.tablesorter.min.js"></script><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/><script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script><script type="text/javascript">
+        $(document).ready(function() {$(".tablesorter").tablesorter();});
+      </script>
+        <style>
+          table.codegrid { font-family: monospace; font-size: 12px; width: auto!important; }table.statementlist { width: auto!important; font-size: 13px; } table.codegrid td { padding: 0!important; border: 0!important } table td.linenumber { width: 40px!important; } 
+        </style>
+      </head>
+      <body style="font-family: monospace;">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#codegrid" data-toggle="tab">Codegrid</a>
+          </li>
+          <li>
+            <a href="#statementlist" data-toggle="tab">Statement List</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="codegrid">
+            <pre style='font-size: 12pt; font-family: courier;'>1 <span style=''>package edu.knoldus
+</span>2 <span style=''>
+</span>3 <span style=''>import akka.actor.{ActorRef, Actor}
+</span>4 <span style=''>
+</span>5 <span style=''>class ValidationActor(purchaseRef: ActorRef) extends Actor with akka.actor.ActorLogging {
+</span>6 <span style=''>
+</span>7 <span style=''>  var quantityOfItem = </span><span style='background: #AEF1AE'>5</span><span style=''>
+</span>8 <span style=''>
+</span>9 <span style=''>  override def receive = {
+</span>10 <span style=''>    case c: Customer =&gt;
+</span>11 <span style=''>      </span><span style='background: #AEF1AE'>log.info(&quot;Checking for existence of item in ValidationActor&quot;)</span><span style=''>
+</span>12 <span style=''>      </span><span style='background: #AEF1AE'>self ! checkItem</span><span style=''>
+</span>13 <span style=''>  }
+</span>14 <span style=''>
+</span>15 <span style=''>  def checkItem = {
+</span>16 <span style=''>    if(</span><span style='background: #AEF1AE'>quantityOfItem &gt; 0</span><span style=''>) </span><span style='background: #AEF1AE'>{
+</span>17 <span style=''></span><span style='background: #AEF1AE'>      quantityOfItem -= 1
+</span>18 <span style=''></span><span style='background: #AEF1AE'>      purchaseRef.forward(0)
+</span>19 <span style=''></span><span style='background: #AEF1AE'>    }</span><span style=''> else </span><span style='background: #F0ADAD'>{
+</span>20 <span style=''></span><span style='background: #F0ADAD'>      log.error(&quot;Out of stock&quot;)
+</span>21 <span style=''></span><span style='background: #F0ADAD'>      purchaseRef.forward(-1)
+</span>22 <span style=''></span><span style='background: #F0ADAD'>    }</span><span style=''>
+</span>23 <span style=''>  }
+</span>24 <span style=''>
+</span>25 <span style=''>}
+</span></pre>
+          </div>
+          <div class="tab-pane" id="statementlist">
+            <table cellspacing="0" cellpadding="0" class="table statementlist">
+      <tr>
+        <th>Line</th>
+        <th>Stmt Id</th>
+        <th>Pos</th>
+        <th>Tree</th>
+        <th>Symbol</th>
+        <th>Code</th>
+      </tr><tr>
+        <td>
+          7
+        </td>
+        <td>
+          14
+        </td>
+        <td>
+          172
+          -
+          173
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          5
+        </td>
+      </tr><tr>
+        <td>
+          9
+        </td>
+        <td>
+          20
+        </td>
+        <td>
+          200
+          -
+          200
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.knoldus.ValidationActor.$anonfun.&lt;init&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          new $anonfun()
+        </td>
+      </tr><tr>
+        <td>
+          11
+        </td>
+        <td>
+          15
+        </td>
+        <td>
+          232
+          -
+          293
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.event.LoggingAdapter.info
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.log.info(&quot;Checking for existence of item in ValidationActor&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          17
+        </td>
+        <td>
+          307
+          -
+          316
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          edu.knoldus.ValidationActor.checkItem
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.checkItem
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          16
+        </td>
+        <td>
+          300
+          -
+          304
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.Actor.self
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.self
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          19
+        </td>
+        <td>
+          300
+          -
+          316
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.actor.ScalaActorRef.!
+        </td>
+        <td style="background: #AEF1AE">
+          akka.this.actor.`package`.actorRef2Scala(ValidationActor.this.self).!(ValidationActor.this.checkItem)(ValidationActor.this.self)
+        </td>
+      </tr><tr>
+        <td>
+          12
+        </td>
+        <td>
+          18
+        </td>
+        <td>
+          305
+          -
+          305
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.Actor.self
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.self
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          27
+        </td>
+        <td>
+          369
+          -
+          431
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          {
+  ValidationActor.this.quantityOfItem_=(ValidationActor.this.quantityOfItem.-(1));
+  ValidationActor.this.purchaseRef.forward(0)(ValidationActor.this.context)
+}
+        </td>
+      </tr><tr>
+        <td>
+          16
+        </td>
+        <td>
+          21
+        </td>
+        <td>
+          349
+          -
+          367
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Int.&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.quantityOfItem.&gt;(0)
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          23
+        </td>
+        <td>
+          377
+          -
+          396
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          edu.knoldus.ValidationActor.quantityOfItem_=
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.quantityOfItem_=(ValidationActor.this.quantityOfItem.-(1))
+        </td>
+      </tr><tr>
+        <td>
+          17
+        </td>
+        <td>
+          22
+        </td>
+        <td>
+          377
+          -
+          396
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          scala.Int.-
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.quantityOfItem.-(1)
+        </td>
+      </tr><tr>
+        <td>
+          18
+        </td>
+        <td>
+          26
+        </td>
+        <td>
+          403
+          -
+          425
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.actor.ActorRef.forward
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.purchaseRef.forward(0)(ValidationActor.this.context)
+        </td>
+      </tr><tr>
+        <td>
+          18
+        </td>
+        <td>
+          25
+        </td>
+        <td>
+          422
+          -
+          422
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.Actor.context
+        </td>
+        <td style="background: #AEF1AE">
+          ValidationActor.this.context
+        </td>
+      </tr><tr>
+        <td>
+          18
+        </td>
+        <td>
+          24
+        </td>
+        <td>
+          423
+          -
+          424
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #AEF1AE">
+          0
+        </td>
+      </tr><tr>
+        <td>
+          19
+        </td>
+        <td>
+          32
+        </td>
+        <td>
+          437
+          -
+          506
+        </td>
+        <td>
+          Block
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          {
+  ValidationActor.this.log.error(&quot;Out of stock&quot;);
+  ValidationActor.this.purchaseRef.forward(-1)(ValidationActor.this.context)
+}
+        </td>
+      </tr><tr>
+        <td>
+          20
+        </td>
+        <td>
+          28
+        </td>
+        <td>
+          445
+          -
+          470
+        </td>
+        <td>
+          Apply
+        </td>
+        <td>
+          akka.event.LoggingAdapter.error
+        </td>
+        <td style="background: #F0ADAD">
+          ValidationActor.this.log.error(&quot;Out of stock&quot;)
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          29
+        </td>
+        <td>
+          498
+          -
+          499
+        </td>
+        <td>
+          Literal
+        </td>
+        <td>
+          &lt;nosymbol&gt;
+        </td>
+        <td style="background: #F0ADAD">
+          -1
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          31
+        </td>
+        <td>
+          477
+          -
+          500
+        </td>
+        <td>
+          ApplyToImplicitArgs
+        </td>
+        <td>
+          akka.actor.ActorRef.forward
+        </td>
+        <td style="background: #F0ADAD">
+          ValidationActor.this.purchaseRef.forward(-1)(ValidationActor.this.context)
+        </td>
+      </tr><tr>
+        <td>
+          21
+        </td>
+        <td>
+          30
+        </td>
+        <td>
+          496
+          -
+          496
+        </td>
+        <td>
+          Select
+        </td>
+        <td>
+          akka.actor.Actor.context
+        </td>
+        <td style="background: #F0ADAD">
+          ValidationActor.this.context
+        </td>
+      </tr>
+    </table>
+          </div>
+        </div>
+      </body>
+    </html>
